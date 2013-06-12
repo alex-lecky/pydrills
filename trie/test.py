@@ -1,8 +1,8 @@
 from unittest import TestCase
 from trie import TrieSet
 
-class TrieSetTest(TestCase):
 
+class TrieSetTest(TestCase):
     def setUp(self):
         pass
 

@@ -8,10 +8,16 @@ class TrieSetTest(TestCase):
 
     def test_trie_has_words_after_adding(self):
         words = ('the', 'quick', 'brown', 'fox', 'jumped', 'over', 'lazy', 'dogs')
+        words_not = ('t', 'bacon', 'theme')
         trie = TrieSet()
         for word in words:
             self.assertFalse(trie.has_word(word))
             trie.add(word)
+
+        #test for false positives
+        for word in words_not:
+            self.assertFalse(trie.has_word(word))
+            
         for word in words:
             self.assertTrue(trie.has_word(word))
             trie.remove(word)
@@ -96,3 +102,23 @@ class TrieSetTest(TestCase):
         sub_trie.remove('s Word Is A Sentence')
         self.assertFalse(trie.has_word('This Word Is A Sentence'))
         self.assertTrue(sub_trie.has_prefix('s'))
+
+    def test_remove_right_word(self):
+        #Tests that remove() only removes the correct word
+        words = ('a', 'ap', 'apple', 'ape', 'big')
+        trie = TrieSet()
+
+        for word in words:
+            trie.add(word)
+
+        for test_word in words:
+            trie.remove(test_word)
+            for word in words:
+                if word != test_word:
+                    self.assertTrue(trie.has_word(word))
+                else:
+                    self.assertFalse(trie.has_word(word))
+            trie.add(test_word)
+            
+
+        

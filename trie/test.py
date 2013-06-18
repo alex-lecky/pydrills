@@ -72,6 +72,13 @@ class TrieSetTest(TestCase):
             trie = trie.get_prefix_trie(letter)
             self.assertTrue(trie.has_word(remaining_word))
 
+            #Tests that subtrie has all functionality of a trie
+            self.assertRaises(KeyError, lambda: trie.remove(''))
+            self.assertRaises(KeyError, lambda: trie.get_prefix_trie(''))
+            self.assertRaises(KeyError, lambda: trie.remove('34543'))
+            self.assertRaises(KeyError, lambda: trie.get_prefix_trie('34543'))
+            self.assertFalse(trie.has_prefix(''))
+
     def test_putting_it_all_together(self):
         trie = TrieSet()
         trie.add('This Word Is A Sentence')
@@ -101,6 +108,7 @@ class TrieSetTest(TestCase):
 
         sub_trie.remove('s Word Is A Sentence')
         self.assertFalse(trie.has_word('This Word Is A Sentence'))
+        self.assertFalse(trie.has_word('s Word Is A Sentence'))        
         self.assertTrue(sub_trie.has_prefix('s'))
 
     def test_remove_right_word(self):
